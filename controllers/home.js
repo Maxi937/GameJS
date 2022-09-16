@@ -1,6 +1,6 @@
 "use strict"
 
-const accounts = {
+const home = {
   index(req, res) {
 
     const viewData = {
@@ -10,4 +10,4 @@ const accounts = {
   },
 };
 
-module.exports = accounts;
+module.exports = home;
