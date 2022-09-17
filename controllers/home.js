@@ -1,4 +1,5 @@
 "use strict"
+const logger = require("../utils/logger")
 
 const home = {
   index(req, res) {
@@ -6,6 +7,9 @@ const home = {
     const viewData = {
       title: "Index",
     };
+
+    logger.info("Rendering Index", { req: "fffff"})
+
     res.render("index", viewData);
   },
 };
