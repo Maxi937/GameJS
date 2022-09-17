@@ -1,5 +1,11 @@
+// declare classes
 let player;
 let level;
+
+// recentre canvas if window resized
+function windowResized() {
+  centerCanvas();
+}
 
 function centerCanvas() {
   var x = (windowWidth - width) / 2;
@@ -7,6 +13,12 @@ function centerCanvas() {
   cnv.position(x, y);
 }
 
+// preload -- load images
+function preload() {
+  testImg = loadImage("images/gameAssets/player/player03.png");
+}
+
+// Setup game --create objects
 function setup() {
   cnv = createCanvas(750, 400);
   centerCanvas();
@@ -18,10 +30,7 @@ function setup() {
   player = new Player(level.getLevelPos());
 }
 
-function windowResized() {
-  centerCanvas();
-}
-
+// DRAW
 function draw() {
   if (mouseIsPressed) {
     player.move();
@@ -30,23 +39,13 @@ function draw() {
   player.display();
 }
 
-// Player Class
-class Player {
-  constructor(origin) {
-    this.height = 40;
-    this.width = 15;
-    this.x = 20;
-    this.y = origin-this.height;
-  }
 
-  move() {
-    this.x += 2;
-  }
 
-  display() {
-    rect(this.x, this.y, this.width,this.height)
-  }
-}
+
+/**********************
+--------CLASSES--------
+***********************/
+
 
 // Level Class
 class Level {
@@ -64,6 +63,31 @@ class Level {
 
   getLevelPos(){
     return this.y;
+  }
+}
+
+// Player Class
+class Player {
+  constructor(origin) {
+    this.hitbox = {
+      height: 40,
+      width: 15,
+    }
+    this.hitbox.x = 10;
+    this.hitbox.y = origin - this.hitbox.height;
+  }
+
+  move() {
+    this.hitbox.x += 2;
+  }
+
+  display() {
+    rect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+    image(testImg, this.hitbox.x - this.hitbox.width, this.hitbox.y);
+  }
+
+  getPos(){
+    return this.hitbox;
   }
 }
 
