@@ -2,6 +2,9 @@
 let player;
 let level;
 
+//declare globals
+let playerImageFrames = [];
+
 // recentre canvas if window resized
 function windowResized() {
   centerCanvas();
@@ -15,7 +18,9 @@ function centerCanvas() {
 
 // preload -- load images
 function preload() {
-  testImg = loadImage("images/gameAssets/player/player03.png");
+  for (const frame of playerFrames) {
+    playerImageFrames.push(loadImage(`images/gameAssets/player/${frame}`));
+  }
 }
 
 // Setup game --create objects
@@ -36,23 +41,24 @@ function draw() {
   player.update();
 }
 
+// controls
 function keyPressed() {
   if (key == "a") {
-    player.right = true
+    player.right = true;
   }
 
   if (key == "d") {
-    player.left = true
+    player.left = true;
   }
 }
 
 function keyReleased() {
   if (key == "a") {
-    player.right = false
+    player.right = false;
   }
 
   if (key == "d") {
-    player.left = false
+    player.left = false;
   }
 }
 
@@ -81,7 +87,7 @@ class Level {
 
 // Player Class
 class Player {
-  constructor(origin) {
+  constructor(origin, animations) {
     this.x = 10;
     this.y = origin - 40;
     this.width = 15;
@@ -95,19 +101,19 @@ class Player {
 
   display() {
     rect(this.x, this.y, this.width, this.height);
-    image(testImg, this.x - this.width, this.y);
+    image(playerImageFrames[4], this.x - this.width, this.y);
   }
 
   controller() {
-    if (this.right == true){
-      this.x = this.x - 2
+    if (this.right == true) {
+      this.x = this.x - 2;
     }
 
-    if (this.left == true){
-      this.x = this.x + 2
+    if (this.left == true) {
+      this.x = this.x + 2;
     }
   }
-  
+
   // getters
   getPos() {
     let playerPos = {
