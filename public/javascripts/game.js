@@ -22,7 +22,7 @@ function preload() {
 function setup() {
   cnv = createCanvas(750, 400);
   centerCanvas();
-  
+
   //create Level Object
   level = new Level();
 
@@ -32,36 +32,49 @@ function setup() {
 
 // DRAW
 function draw() {
-  if (mouseIsPressed) {
-    player.move();
-  }
   level.display();
-  player.display();
+  player.update();
 }
 
+function keyPressed() {
+  if (key == "a") {
+    player.right = true
+  }
 
+  if (key == "d") {
+    player.left = true
+  }
+}
 
+function keyReleased() {
+  if (key == "a") {
+    player.right = false
+  }
+
+  if (key == "d") {
+    player.left = false
+  }
+}
 
 /**********************
 --------CLASSES--------
 ***********************/
-
 
 // Level Class
 class Level {
   constructor() {
     this.height = 75;
     this.x = 0;
-    this.y = cnv.height-this.height;
+    this.y = cnv.height - this.height;
   }
 
-  display(){
+  display() {
     background(50, 89, 100);
-    fill(80)
-    rect(this.x, this.y, cnv.width, this.height)
+    fill(80);
+    rect(this.x, this.y, cnv.width, this.height);
   }
 
-  getLevelPos(){
+  getLevelPos() {
     return this.y;
   }
 }
@@ -69,25 +82,40 @@ class Level {
 // Player Class
 class Player {
   constructor(origin) {
-    this.hitbox = {
-      height: 40,
-      width: 15,
-    }
-    this.hitbox.x = 10;
-    this.hitbox.y = origin - this.hitbox.height;
+    this.x = 10;
+    this.y = origin - 40;
+    this.width = 15;
+    this.height = 40;
   }
 
-  move() {
-    this.hitbox.x += 2;
+  update() {
+    this.controller();
+    this.display();
   }
 
   display() {
-    rect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
-    image(testImg, this.hitbox.x - this.hitbox.width, this.hitbox.y);
+    rect(this.x, this.y, this.width, this.height);
+    image(testImg, this.x - this.width, this.y);
   }
 
-  getPos(){
-    return this.hitbox;
+  controller() {
+    if (this.right == true){
+      this.x = this.x - 2
+    }
+
+    if (this.left == true){
+      this.x = this.x + 2
+    }
+  }
+  
+  // getters
+  getPos() {
+    let playerPos = {
+      x,
+      y,
+      width,
+      height,
+    };
+    return playerPos;
   }
 }
-
