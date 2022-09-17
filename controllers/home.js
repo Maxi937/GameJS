@@ -8,7 +8,7 @@ const home = {
       title: "Index",
     };
 
-    logger.info("Rendering Index", { req: "fffff"})
+    logger.info("Rendering Index")
 
     res.render("index", viewData);
   },

@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// logger for requests
+// logger pass through
 app.use( (req, res, done) => {
   logger.info(`${req.method} "${req.originalUrl}"`);
   done();
